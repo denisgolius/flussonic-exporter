@@ -1,0 +1,22 @@
+version: '3.7'
+
+x-aliases:
+  - &restart
+    restart: always
+  - &logging
+    logging:
+      driver: json-file
+      options:
+        max-file: '5'
+        max-size: 10m
+
+services:
+####
+  flussonic:
+    image: denisgolius/flussonic-exporter
+    environment:
+      - ./config.json:/config.json
+    ports:
+      - 9228:9228
+    <<: *logging
+    <<: *restart
